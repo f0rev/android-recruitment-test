@@ -3,7 +3,7 @@ Android Recruitment test
 ### Tələb 1
 Bu repozitoriyanı fork edin:
 * Tapşırıqları yerinə yetirdikcə Commit etməyi unutmayın.
-* Suallarınız yarandığı halda Issus-dən istifadə edin.
+* Suallarınız yarandığı halda Issues-dən istifadə edin.
 
 ### Tələb 2
 Aşağıdakiları tapşırıqları həyata keçirin:
