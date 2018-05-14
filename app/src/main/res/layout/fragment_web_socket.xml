@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#2E2F41"
+    tools:context=".WebSocketFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <com.basel.DualButton.DualButton
+            android:id="@+id/dualBtn"
+            android:layout_width="166dp"
+            android:layout_height="38dp"
+            android:layout_centerInParent="true"
+            android:layout_marginTop="15dp"
+            android:fadingEdgeLength="10dp"
+            app:backgroundColorFirst="#00C8FF"
+            app:backgroundColorSecond="#505469"
+            app:textColorFirst="#ffffff"
+            app:textColorSecond="#00C8FF"
+            app:textFirst="@string/connect"
+            app:textSecond="@string/disconnect" />
+
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rv_currencies"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v7.widget.RecyclerView>
+
+
+</LinearLayout>
