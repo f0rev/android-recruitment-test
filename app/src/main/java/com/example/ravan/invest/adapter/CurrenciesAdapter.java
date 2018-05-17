@@ -8,9 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ravan.invest.R;
@@ -22,11 +20,8 @@ import org.json.JSONObject;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
-import java.util.List;
-import java.util.TimeZone;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -63,7 +58,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         currenciesViewHolder.setTrend(value);
                         break;
                     case 1:
-                        currenciesViewHolder.setFirstField(value);
+                        currenciesViewHolder.setName(value);
                         break;
                     case 2:
                         currenciesViewHolder.setSecondField(value);
@@ -79,7 +74,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         break;
                     case 6:
                         Log.d("WQdwefwef", "onBindViewHolder: " + value);
-                        currenciesViewHolder.setSixthField(value);
+                        currenciesViewHolder.setNumber(value);
                         break;
                     case 7:
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
@@ -121,7 +116,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.trend)
         ImageView trendIcon;
         @BindView(R.id.first_field)
-        TextView firstField;
+        TextView name;
         @BindView(R.id.second_field)
         TextView secondField;
         @BindView(R.id.third_field)
@@ -131,7 +126,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.fifthh_field)
         TextView fifthField;
         @BindView(R.id.sixth_field)
-        TextView sixthField;
+        TextView number;
         @BindView(R.id.time)
         TextView time;
         @BindView(R.id.date)
@@ -153,8 +148,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             }
         }
 
-        private void setFirstField(String txt) {
-            firstField.setText(txt);
+        private void setName(String txt) {
+            name.setText(txt);
         }
 
         private void setSecondField(String txt){
@@ -170,8 +165,8 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         private void setFifthField(String txt){
             fifthField.setText(txt);
         }
-        private void setSixthField(String txt){
-            sixthField.setText(txt);
+        private void setNumber(String txt){
+            number.setText(txt);
         }
         private void setTime(String txt){
             time.setText(txt);

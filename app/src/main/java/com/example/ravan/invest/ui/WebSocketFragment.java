@@ -1,4 +1,4 @@
-package com.example.ravan.invest;
+package com.example.ravan.invest.ui;
 
 
 import android.os.Bundle;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.basel.DualButton.DualButton;
+import com.example.ravan.invest.R;
 import com.example.ravan.invest.adapter.CurrenciesAdapter;
 import com.example.ravan.invest.converters.WebSocketConverterFactory;
 import com.navin.flintstones.rxwebsocket.RxWebsocket;
@@ -21,13 +22,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.CompositeDisposable;
 
 
 /**
@@ -44,6 +43,7 @@ public class WebSocketFragment extends Fragment {
     private View rootView;
     private RxWebsocket mWebsocket;
     private CurrenciesAdapter mCurrenciesAdapter;
+    private CompositeDisposable mCompositeDisposable;
 
     public WebSocketFragment() {
     }
@@ -54,6 +54,7 @@ public class WebSocketFragment extends Fragment {
                              Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_web_socket, container, false);
         unbinder = ButterKnife.bind(this, rootView);
+        mCompositeDisposable = new CompositeDisposable();
 
         initAdapter();
         configureClicks();
@@ -71,21 +72,22 @@ public class WebSocketFragment extends Fragment {
             @Override
             public void onClickFirst(Button button) {
                 openWebsocket();
-                mWebsocket.connect()
+                mCompositeDisposable.add(mWebsocket.connect()
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(
                                 event -> Log.d(MainActivity.class.getSimpleName(), event.toString()),
-                                this::showError);
+                                this::showError));
             }
 
             @Override
             public void onClickSecond(Button button) {
                 if (mWebsocket != null) {
-                    mWebsocket.disconnect(1000, "Disconnect")
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(
-                                    event -> Log.d(MainActivity.class.getSimpleName(), event.toString()),
-                                    this::showError);
+                    mCompositeDisposable.add(
+                            mWebsocket.disconnect(1000, "Disconnect")
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(
+                                            event -> Log.d(MainActivity.class.getSimpleName(), event.toString()),
+                                            this::showError));
                 }
             }
         });
@@ -100,7 +102,6 @@ public class WebSocketFragment extends Fragment {
     }
 
 
-
     private void openWebsocket() {
         mWebsocket = new RxWebsocket.Builder()
                 .addConverterFactory(WebSocketConverterFactory.create())
@@ -109,27 +110,28 @@ public class WebSocketFragment extends Fragment {
     }
 
     private void logEvents() {
-        mWebsocket.eventStream()
-                .observeOn(AndroidSchedulers.mainThread())
-                .doOnNext(event -> {
-                    if (event instanceof RxWebsocket.Open) {
-                        showState("CONNECTED");
-                    } else if (event instanceof RxWebsocket.Closed) {
-                        showState("DISCONNECTED");
-                    } else if (event instanceof RxWebsocket.QueuedMessage) {
-                        showState("[MESSAGE QUEUED]:" + ((RxWebsocket.QueuedMessage) event).message().toString());
-                    } else if (event instanceof RxWebsocket.Message) {
-                        try {
-                            String message =  ((RxWebsocket.Message) event).data();
-                            mCurrenciesAdapter.updateItems(getCorrectCurrencies(message));
+        mCompositeDisposable.add(
+                mWebsocket.eventStream()
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .doOnNext(event -> {
+                            if (event instanceof RxWebsocket.Open) {
+                                showState("CONNECTED");
+                            } else if (event instanceof RxWebsocket.Closed) {
+                                showState("DISCONNECTED");
+                            } else if (event instanceof RxWebsocket.QueuedMessage) {
+                                showState("[MESSAGE QUEUED]:" + ((RxWebsocket.QueuedMessage) event).message().toString());
+                            } else if (event instanceof RxWebsocket.Message) {
+                                try {
+                                    String message = ((RxWebsocket.Message) event).data();
+                                    mCurrenciesAdapter.updateItems(getCorrectCurrencies(message));
 
-                        } catch (Throwable throwable) {
-                            showState("[MESSAGE RECEIVED]:" + ((RxWebsocket.Message) event).data().toString());
-                        }
-                    }
-                })
-                .subscribe(event -> {
-                }, this::showError);
+                                } catch (Throwable throwable) {
+                                    showState("[MESSAGE RECEIVED]:" + ((RxWebsocket.Message) event).data().toString());
+                                }
+                            }
+                        })
+                        .subscribe(event -> {
+                        }, this::showError));
     }
 
     private JSONArray getCorrectCurrencies(String message) throws JSONException {
@@ -137,21 +139,20 @@ public class WebSocketFragment extends Fragment {
         JSONArray jsonArray = new JSONArray(messageCorrect);
         JSONObject jsonObject = jsonArray.getJSONObject(1);
         JSONArray result = jsonObject.getJSONArray("result");
-
         return result;
     }
 
-    private void initAdapter(){
+    private void initAdapter() {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
         mRvCurrencies.setLayoutManager(layoutManager);
-        mCurrenciesAdapter= new CurrenciesAdapter(getContext());
+        mCurrenciesAdapter = new CurrenciesAdapter(getContext());
         mRvCurrencies.setAdapter(mCurrenciesAdapter);
     }
-
 
     @Override
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

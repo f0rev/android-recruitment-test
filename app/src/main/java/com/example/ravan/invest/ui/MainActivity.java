@@ -1,8 +1,11 @@
-package com.example.ravan.invest;
+package com.example.ravan.invest.ui;
 
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+
+import com.example.ravan.invest.R;
+import com.example.ravan.invest.ui.WebSocketFragment;
 
 import uk.co.chrisjenx.calligraphy.CalligraphyContextWrapper;
 

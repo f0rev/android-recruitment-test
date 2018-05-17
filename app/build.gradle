@@ -41,14 +41,27 @@ dependencies {
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.4.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
 
+    implementation 'com.squareup.sqlbrite3:sqlbrite:3.2.0'
+
+    implementation 'com.google.dagger:dagger:2.15'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.15'
+
+    implementation 'com.jakewharton.timber:timber:4.7.0'
+
+    implementation "android.arch.persistence.room:runtime:1.1.0"
+    annotationProcessor "android.arch.persistence.room:compiler:1.1.0"
+
+    implementation "com.google.auto.value:auto-value-annotations:1.6"
+    annotationProcessor "com.google.auto.value:auto-value:1.6"
+    annotationProcessor 'com.ryanharter.auto.value:auto-value-parcel:0.2.6'
+
+
     implementation 'com.github.navinilavarasan:rxWebSocket:v1.02'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
 
     implementation 'uk.co.chrisjenx:calligraphy:2.3.0'
 
-
     implementation 'com.github.BaselHorany:DualButton:1.1.1'
-
 
 
 }
