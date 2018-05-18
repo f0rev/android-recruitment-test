@@ -1,9 +1,12 @@
 package com.example.ravan.invest.db;
 
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.os.Parcelable;
 
 import com.google.auto.value.AutoValue;
+
+import io.reactivex.functions.Function;
 
 @AutoValue
 public abstract class CurrenciesItem implements Parcelable {
@@ -11,26 +14,24 @@ public abstract class CurrenciesItem implements Parcelable {
 
     public static final String ID = "_id";
     public static final String LIST_ID = "currencies_list_id";
-    public static final String TREND = "trend";
-    public static final String NAME = "name";
-    public static final String THIRD_FIELD = "third_field";
-    public static final String FOURTH_FIELD = "fourth_field";
-    public static final String FIFTH_FIELD = "fifth_field";
-    public static final String NUMBER = "number";
+    public static final String RESULT = "result";
 
     public abstract long id();
 
-    public abstract String trend();
+    public abstract long listId();
 
-    public abstract String name();
+    public abstract String result();
 
-    public abstract String thirdField();
 
-    public abstract String fourthField();
-
-    public abstract String fifthField();
-
-    public abstract int number();
+    public static final Function<Cursor, CurrenciesItem> MAPPER = new Function<Cursor, CurrenciesItem>() {
+        @Override
+        public CurrenciesItem apply(Cursor cursor) {
+            long id = Db.getLong(cursor, ID);
+            long listId = Db.getLong(cursor, LIST_ID);
+            String result = Db.getString(cursor, RESULT);
+            return new AutoValue_CurrenciesItem(id, listId, result);
+        }
+    };
 
     public static final class Builder {
         private final ContentValues values = new ContentValues();
@@ -40,36 +41,15 @@ public abstract class CurrenciesItem implements Parcelable {
             return this;
         }
 
-        public Builder trend(String trend) {
-            values.put(TREND, trend);
+        public Builder listId(long listId) {
+            values.put(LIST_ID, listId);
             return this;
         }
 
-        public Builder name(String name) {
-            values.put(NAME, name);
+        public Builder result(String result) {
+            values.put(RESULT, result);
             return this;
         }
-
-        public Builder thirdField(String thirdField) {
-            values.put(THIRD_FIELD, thirdField);
-            return this;
-        }
-
-        public Builder fourthField(String fourthField) {
-            values.put(FOURTH_FIELD, fourthField);
-            return this;
-        }
-
-        public Builder fifthField(String fifthField) {
-            values.put(FIFTH_FIELD, fifthField);
-            return this;
-        }
-
-        public Builder number(int number) {
-            values.put(NUMBER, number);
-            return this;
-        }
-
 
         public ContentValues build() {
             return values; // TODO defensive copy?

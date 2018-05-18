@@ -1,8 +1,8 @@
 <resources>
-    <string name="app_name">invest</string>
+    <string name="app_name">Invest</string>
 
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="disconnect">disconnect</string>
-    <string name="connect">connect</string>
+    <string name="disconnect">Disconnect</string>
+    <string name="connect">Connect</string>
+    <string name="api_url">wss://q.investaz.net:3000/socket.io/?EIO=3&amp;transport=websocket</string>
+    <string name="empty_logs">NO LOGS YET</string>
 </resources>

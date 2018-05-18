@@ -16,11 +16,12 @@ public class WebSocketApp extends Application {
             Timber.plant(new Timber.DebugTree());
         }
 
-//        mainComponent = DaggerWebSocketComponent.builder().todoModule(new WebSocketModule(this)).build();
+        mainComponent = DaggerWebSocketComponent.builder().webSocketModule(
+                new WebSocketModule(this)).build();
 
     }
 
-    public static WebSocketComponent getWebSocketComponent(Context context){
-        return ((WebSocketApp)context.getApplicationContext()).mainComponent;
+    public static WebSocketComponent getComponent(Context context) {
+        return ((WebSocketApp) context.getApplicationContext()).mainComponent;
     }
 }

@@ -38,26 +38,21 @@ public final class DbModule {
     @Singleton
     SqlBrite provideSqlBrite() {
         return new SqlBrite.Builder()
-                .logger(new SqlBrite.Logger() {
-                    @Override
-                    public void log(String message) {
-                        Timber.tag("Database").v(message);
-                    }
-                })
+                .logger(message -> Timber.tag("Database").v(message))
                 .build();
     }
 
-//    @Provides
-//    @Singleton
-//    BriteDatabase provideDatabase(SqlBrite sqlBrite, Application application) {
-//        Configuration configuration = Configuration.builder(application)
-//                .name("todo.db")
-//                .callback(new DbCallback())
-//                .build();
-//        Factory factory = new FrameworkSQLiteOpenHelperFactory();
-//        SupportSQLiteOpenHelper helper = factory.create(configuration);
-//        BriteDatabase db = sqlBrite.wrapDatabaseHelper(helper, Schedulers.io());
-//        db.setLoggingEnabled(true);
-//        return db;
-//    }
+    @Provides
+    @Singleton
+    BriteDatabase provideDatabase(SqlBrite sqlBrite, Application application) {
+        Configuration configuration = Configuration.builder(application)
+                .name("currencies.db")
+                .callback(new DbCallback())
+                .build();
+        Factory factory = new FrameworkSQLiteOpenHelperFactory();
+        SupportSQLiteOpenHelper helper = factory.create(configuration);
+        BriteDatabase db = sqlBrite.wrapDatabaseHelper(helper, Schedulers.io());
+        db.setLoggingEnabled(true);
+        return db;
+    }
 }

@@ -147,11 +147,12 @@
             android:layout_marginRight="2dp"
             android:layout_marginTop="4dp"
             android:padding="2dp"
-            android:shadowColor="#8A8B93"
+
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:textColor="#F9F9FA"
+            android:shadowColor="#9E713B"
+            android:textColor="#FCC630"
             android:textSize="17sp" />
 
         <TextView
@@ -164,11 +165,11 @@
             android:layout_marginLeft="2dp"
             android:layout_marginRight="2dp"
             android:padding="2dp"
-            android:shadowColor="#9E713B"
+            android:shadowColor="#8A8B93"
+            android:textColor="#F9F9FA"
             android:shadowDx="1"
             android:shadowDy="1"
             android:shadowRadius="2"
-            android:textColor="#FCC630"
             android:textSize="15sp" />
 
     </RelativeLayout>

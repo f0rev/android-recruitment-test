@@ -1,4 +1,4 @@
-package com.example.ravan.invest.adapter;
+package com.example.ravan.invest.ui;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -28,11 +28,17 @@ import butterknife.ButterKnife;
 
 public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
+    private final SimpleDateFormat mDateFormat;
     private JSONArray mData = new JSONArray();
     private Context mContext;
+    private SimpleDateFormat mLocalTimeFormat;
+    private SimpleDateFormat mLocalDateFormat;
 
     public CurrenciesAdapter(Context context) {
         mContext = context;
+        mDateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
+        mLocalTimeFormat = new SimpleDateFormat("HH:mm:ss");
+        mLocalDateFormat = new SimpleDateFormat("dd.MM.yyyy");
     }
 
     @NonNull
@@ -73,31 +79,24 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
                         currenciesViewHolder.setFifthField(value);
                         break;
                     case 6:
-                        Log.d("WQdwefwef", "onBindViewHolder: " + value);
                         currenciesViewHolder.setNumber(value);
                         break;
                     case 7:
-                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
                         try {
-                            Date dateObject = dateFormat.parse(value);
-                            SimpleDateFormat localTimeFormat = new SimpleDateFormat("HH:mm:ss");
-                            SimpleDateFormat localDateFormat = new SimpleDateFormat("dd.MM.yyyy");
-                            String time = localTimeFormat.format(dateObject);
-                            String date = localDateFormat.format(dateObject);
+                            Date dateObject = mDateFormat.parse(value);
+                            String time = mLocalTimeFormat.format(dateObject);
+                            String date = mLocalDateFormat.format(dateObject);
                             currenciesViewHolder.setTime(time);
                             currenciesViewHolder.setDate(date);
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-
                         break;
-
                 }
             }
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
 
     }
 
@@ -132,7 +131,7 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
         @BindView(R.id.date)
         TextView date;
 
-        public CurrenciesViewHolder(View itemView) {
+        CurrenciesViewHolder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
@@ -152,26 +151,31 @@ public class CurrenciesAdapter extends RecyclerView.Adapter<RecyclerView.ViewHol
             name.setText(txt);
         }
 
-        private void setSecondField(String txt){
+        private void setSecondField(String txt) {
             secondField.setText(txt);
         }
 
-        private void setThirdField(String txt){
+        private void setThirdField(String txt) {
             thirdField.setText(txt);
         }
-        private void setFourthField(String txt){
+
+        private void setFourthField(String txt) {
             fourthField.setText(txt);
         }
-        private void setFifthField(String txt){
+
+        private void setFifthField(String txt) {
             fifthField.setText(txt);
         }
-        private void setNumber(String txt){
+
+        private void setNumber(String txt) {
             number.setText(txt);
         }
-        private void setTime(String txt){
+
+        private void setTime(String txt) {
             time.setText(txt);
         }
-        private void setDate(String txt){
+
+        private void setDate(String txt) {
             date.setText(txt);
         }
 

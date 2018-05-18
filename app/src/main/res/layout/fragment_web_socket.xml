@@ -1,39 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="#2E2F41"
+    android:orientation="vertical"
     tools:context=".ui.WebSocketFragment">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content">
 
         <com.basel.DualButton.DualButton
             android:id="@+id/dualBtn"
             android:layout_width="166dp"
             android:layout_height="38dp"
             android:layout_centerInParent="true"
-            android:layout_marginTop="15dp"
             android:fadingEdgeLength="10dp"
             app:backgroundColorFirst="#00C8FF"
             app:backgroundColorSecond="#505469"
+            app:textSizeFirst="16sp"
+            app:textSizeSecond="16sp"
+            android:layout_alignParentTop="true"
             app:textColorFirst="#ffffff"
             app:textColorSecond="#00C8FF"
             app:textFirst="@string/connect"
             app:textSecond="@string/disconnect" />
 
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_currencies"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/dualBtn"/>
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_currencies"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom">
 
 
-</LinearLayout>
+        <ImageView
+            android:id="@+id/condition_expand_btn"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_centerHorizontal="true"
+            android:src="@drawable/ic_arrow_up"
+            android:tint="@android:color/white" />
+
+        <com.github.aakira.expandablelayout.ExpandableRelativeLayout
+            android:id="@+id/condition_exp_layout"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_below="@id/condition_expand_btn"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimary"
+            app:ael_duration="400"
+            app:ael_expanded="false"
+            app:ael_interpolator="accelerateDecelerate"
+            app:ael_orientation="vertical">
+
+            <ListView
+                android:id="@+id/log_list"
+                android:layout_width="match_parent"
+                android:stackFromBottom="true"
+                android:transcriptMode="alwaysScroll"
+                android:visibility="gone"
+                android:layout_height="190dp">
+
+            </ListView>
+
+            <TextView
+                android:id="@+id/empty_log_state"
+                fontPath="fonts/SFBold.ttf"
+                android:layout_width="match_parent"
+                android:layout_height="190dp"
+                android:textColor="#46587e"
+                android:gravity="center"
+                android:textSize="40sp"
+                android:text="@string/empty_logs"/>
+
+        </com.github.aakira.expandablelayout.ExpandableRelativeLayout>
+
+    </RelativeLayout>
+
+
+</FrameLayout>

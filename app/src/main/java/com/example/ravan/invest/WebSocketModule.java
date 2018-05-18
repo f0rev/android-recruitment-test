@@ -9,22 +9,19 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 
-@Module(
-        includes = {
-                DbModule.class,
-        }
-)
+@Module(includes = {DbModule.class,})
 
 public final class WebSocketModule {
-    private final Application application;
+
+    private final Application mApplication;
 
     WebSocketModule(Application application) {
-        this.application = application;
+        mApplication = application;
     }
 
     @Provides
     @Singleton
     Application provideApplication() {
-        return application;
+        return mApplication;
     }
 }
